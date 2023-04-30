@@ -31,4 +31,19 @@ public class RoomServiceImpl implements RoomService {
     public Room delete(Long id) {
         return null;
     }
+
+    @Override
+    public Iterable<Room> findAllByDomId(long id) {
+        return roomRepository.findAllRoomByDomId(id);
+    }
+
+    @Override
+    public Boolean deleteById(Long id) {
+        Optional<Room> home = roomRepository.findById(id);
+        roomRepository.deleteById(id);
+        return true;
+    }
+
+
+
 }

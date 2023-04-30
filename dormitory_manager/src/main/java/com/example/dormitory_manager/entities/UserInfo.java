@@ -55,7 +55,7 @@ public class UserInfo extends AbstractEntity implements Serializable {
 
 
     @ManyToOne
-    @JoinColumn(name = "room_id", nullable = false)
+    @JoinColumn(name = "room_id", nullable = true)
     private Room room;
 
     public Room getRoom() {

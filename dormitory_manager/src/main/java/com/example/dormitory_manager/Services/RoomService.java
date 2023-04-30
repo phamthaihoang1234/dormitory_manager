@@ -9,4 +9,10 @@ public interface RoomService {
     Optional<Room> getOne(Long id);
     Room save(Room room);
     Room delete(Long id);
+
+    Iterable<Room> findAllByDomId(long id);
+
+    Boolean deleteById(Long id);
+
+
 }

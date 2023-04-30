@@ -21,6 +21,36 @@ public class Room extends AbstractEntity implements Serializable {
     @Column(name = "total_of_bathroom")
     private int totalOfBathroom;
 
+    @Column(name = "cancelled", nullable = false)
+    private Boolean cancelled = false;
+    private Boolean status = true;
+
+    @OneToMany(mappedBy = "room")
+    private List<UserInfo> users;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "dom_id", nullable = false, updatable = false)
+    private Dom dom;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "discount_id", nullable = true, updatable = false)
+    private Discount discount;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "property_type",nullable = true, updatable = false)
+    private PropertyType propertyType;
+
+    @Transient
+    private  Object avgRatting;
+
+    @Transient
+    MultipartFile image;
+
+
+    @Column(nullable = true)
+    private String imgSrc3;
+
+
 
 
     public String getName() {
@@ -87,13 +117,6 @@ public class Room extends AbstractEntity implements Serializable {
         this.status = status;
     }
 
-    public List<Booking> getBookings() {
-        return bookings;
-    }
-
-    public void setBookings(List<Booking> bookings) {
-        this.bookings = bookings;
-    }
 
 
 
@@ -145,40 +168,6 @@ public class Room extends AbstractEntity implements Serializable {
         this.imgSrc3 = imgSrc3;
     }
 
-    @Column(name = "cancelled", nullable = false)
-    private Boolean cancelled = false;
-    private Boolean status = true;
-
-
-
-    @OneToMany(mappedBy = "room")
-    @JsonIgnore
-    private List<Booking> bookings;
-
-    @OneToMany(mappedBy = "room")
-    private List<UserInfo> users;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "dom_id", nullable = false, updatable = false)
-    private Dom dom;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "discount_id", nullable = false, updatable = false)
-    private Discount discount;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "property_type",nullable = false, updatable = false)
-    private PropertyType propertyType;
-
-    @Transient
-    private  Object avgRatting;
-
-    @Transient
-    MultipartFile image;
-
-
-    @Column(nullable = false)
-    private String imgSrc3;
 
 
 }
