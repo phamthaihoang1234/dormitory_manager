@@ -1,10 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-    <p>Hello all student</p>
+
+
+<th:block th:if="${#authorization.expression('isAnonymous()')}">
+
+    <a id="myBtn" th:href="@{/signup}" >THAM GIA</a>
+    <span>&nbsp;|&nbsp;</span>
+</th:block>
+
+
+
+<th:block th:if="${#authorization.expression('isAnonymous()')}">
+
+    <a th:href="@{/login}"
+       style="margin-right: 10px"
+    >ĐĂNG NHẬP</a>
+</th:block>
+
+<div  style="padding-left: 10px ; float: left;
+            margin-right: 10px;" th:if="${#authorization.expression('isAuthenticated()')}" >
+    <span sec:authentication="name"></span>
+    <span>&nbsp;|&nbsp;</span>
+</div>
+
+<div  style="padding-left: 10px ; float: left;
+            margin-right: 10px;" th:if="${#authorization.expression('isAuthenticated()')}" >
+    <a class="container-fluid" th:href="@{/logout}">
+        <span style="float: left" >Đăng xuất</span>
+
+    </a>
+</div>
+
+
+
 </body>
 </html>

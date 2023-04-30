@@ -21,6 +21,8 @@ public class Room extends AbstractEntity implements Serializable {
     @Column(name = "total_of_bathroom")
     private int totalOfBathroom;
 
+
+
     public String getName() {
         return name;
     }
@@ -93,13 +95,7 @@ public class Room extends AbstractEntity implements Serializable {
         this.bookings = bookings;
     }
 
-    public UserInfo getUser() {
-        return user;
-    }
 
-    public void setUser(UserInfo user) {
-        this.user = user;
-    }
 
     public Dom getDom() {
         return dom;
@@ -153,16 +149,14 @@ public class Room extends AbstractEntity implements Serializable {
     private Boolean cancelled = false;
     private Boolean status = true;
 
-//    @OneToMany(orphanRemoval = true, mappedBy = "room")
-//    private List<RoomImage> roomImages;
+
 
     @OneToMany(mappedBy = "room")
     @JsonIgnore
     private List<Booking> bookings;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false, updatable = false)
-    private UserInfo user;
+    @OneToMany(mappedBy = "room")
+    private List<UserInfo> users;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dom_id", nullable = false, updatable = false)

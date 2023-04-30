@@ -5,7 +5,7 @@ package com.example.dormitory_manager.entities;
         import java.util.List;
 
 @Entity
-@Table(name = "hotel_property")
+@Table(name = "dom_property")
 public class Dom_Property {
 
     @Id

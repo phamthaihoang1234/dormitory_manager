@@ -2,7 +2,7 @@ package com.example.dormitory_manager.entities;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "hotel_preview_image")
+@Table(name = "dom_preview_image")
 public class Dom_Preview_Image {
 
     @Id
