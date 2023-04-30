@@ -4,7 +4,9 @@ import com.example.dormitory_manager.Repository.PropertyTypeRepository;
 import com.example.dormitory_manager.Repository.RoomRepository;
 import com.example.dormitory_manager.Services.DomService;
 import com.example.dormitory_manager.Services.RoomService;
+import com.example.dormitory_manager.Services.UserService;
 import com.example.dormitory_manager.entities.Room;
+import com.example.dormitory_manager.entities.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,6 +20,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Controller
 public class RoomController {
@@ -43,6 +48,9 @@ public class RoomController {
 
     @Autowired
     private PropertyTypeRepository typeService;
+
+    @Autowired
+    private UserService userService;
 
 
 
@@ -123,10 +131,54 @@ public class RoomController {
         return "redirect:/roomHomepage";
     }
 
-    @GetMapping("/bookRoom")
-    public String bookRoom(@ModelAttribute Room room){
-        room.setStatus(false);
+    private String getPrincipal() {
+        String userName = null;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (principal instanceof UserDetails) {
+            userName = ((UserDetails) principal).getUsername();
+
+        } else {
+            userName = principal.toString();
+        }
+        return userName;
+    }
+
+    @GetMapping("/bookRoom/{id}")
+    public String bookRoom(@PathVariable("id") long id, RedirectAttributes redirect){
+        Room room = roomService.getOne(id).get();
+        System.out.println("so nguoi da thue la" + room.getUsers().size());
+
+        Set<UserInfo> list = room.getUsers();
+
+        if(room.getUsers().isEmpty()) {
+             list = new HashSet<>();
+        }
+
+        UserInfo userInfo = userService.findByUserName(getPrincipal());
+        userInfo.setRoom(room);
+        list.add(userService.findByUserName(getPrincipal()));
+        room.setTotalOfNumberStudent(list.size());
+
         roomService.save(room);
+
+        if(room.getPropertyType().getId() == 1){
+            if(room.getUsers().size() == 4){
+                room.setStatus(false);
+                roomService.save(room);
+                return "redirect:/roomHomepage";
+            }
+        }
+
+        if(room.getPropertyType().getId() == 2){
+            if(room.getUsers().size() == 6){
+                room.setStatus(false);
+                roomService.save(room);
+                return "redirect:/roomHomepage";
+            }
+
+        }
+        redirect.addFlashAttribute("globalMessageBook", "Booking successfully.");
         return "redirect:/roomHomepage";
     }
 

@@ -157,9 +157,8 @@
                   <tr>
                     <th>STT</th>
                     <th>TÊN</th>
-                    <th>ĐỊA CHỈ</th>
-                    <th>GIÁ 1 THÁNG</th>
-                    <th>SỐ PHÒNG NGỦ</th>
+                    <th>GIÁ 1 KỲ</th>
+                    <th>SỐ NGƯỜI ĐÃ THUÊ</th>
                     <th>SỐ PHÒNG TẮM</th>
                     <th>LOẠI PHÒNG</th>
                     <th>TRẠNG THÁI THUÊ</th>
@@ -170,14 +169,13 @@
                   <tr th:each="r : ${rooms}">
                     <td th:text="${r.id}"></td>
                     <td th:text="${r.name}"></td>
-                    <td th:text="${r.address}"></td>
                     <td th:text="${r.pricePerNight}"></td>
-                    <td th:text="${r.totalOfBedroom}"></td>
+                    <td th:text="${r.totalOfNumberStudent}"></td>
                     <td th:text="${r.totalOfBathroom}"></td>
                     <td th:text="${r.propertyType.name}"></td>
 
                     <td>
-                      <div class="btn btn-sm bg-success-light mr-2" th:text="${r.status} ? 'ACTIVE' : 'RENTED'"></div>
+                      <div class="btn btn-sm bg-success-light mr-2" th:text="${r.status} ? 'ACTIVE' : 'FULLY'"></div>
                     </td>
                     <td class="text-right">
                       <div class="dropdown dropdown-action"> <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-v ellipse_color"></i></a>
@@ -185,13 +183,22 @@
                           <a class="dropdown-item" th:href="@{findOneRoom/{id}(id=${r.id})}"><i class="fas fa-pencil-alt m-r-5"></i> SỬA</a>
                           <a class="dropdown-item delBtn" th:href="@{deleteRoom/(id=${r.id})}"><i class="fas fa-trash-alt m-r-5"></i> XÓA</a>
 
-                          <a th:if="${r.status == true}" class="dropdown-item delBtn" th:href="@{bookRoom/(id=${r.id})}"><i class="fas fa-trash-alt m-r-5"></i> BOOK PHÒNG</a>
+
+                          <div th:if="${r.getPropertyType().getId() == 1}">
+                                <a th:if="${r.getTotalOfNumberStudent() < 4}" class="dropdown-item delBtn" th:href="@{bookRoom/{id}(id=${r.id})}"><i class="fas fa-trash-alt m-r-5"></i> BOOK PHÒNG</a>
+                          </div>
+
+                          <div th:if="${r.getPropertyType().getId() == 2}">
+                            <a th:if="${r.getTotalOfNumberStudent() < 6}" class="dropdown-item delBtn" th:href="@{bookRoom/{id}(id=${r.id})}"><i class="fas fa-trash-alt m-r-5"></i> BOOK PHÒNG</a>
+                          </div>
 
                         </div>
                       </div>
                     </td>
 
                   </tr>
+
+                  <div class="alert alert-success" style="color: #4dae3c ; font-size: 20px" th:if="${globalMessageBook}" th:text="${globalMessageBook}"></div>
 
 
 

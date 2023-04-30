@@ -6,6 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "rooms")
@@ -16,17 +17,36 @@ public class Room extends AbstractEntity implements Serializable {
     private String address;
     @Column(name = "price_per_night")
     private Double pricePerNight;
-    @Column(name = "total_of_bedroom")
-    private int totalOfBedroom;
+    @Column(name = "numberStudent_of_room")
+    private int totalOfNumberStudent;
+
+    public int getTotalOfNumberStudent() {
+        return totalOfNumberStudent;
+    }
+
+    public void setTotalOfNumberStudent(int totalOfNumberStudent) {
+        this.totalOfNumberStudent = totalOfNumberStudent;
+    }
+
+    public Set<UserInfo> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<UserInfo> users) {
+        this.users = users;
+    }
+
     @Column(name = "total_of_bathroom")
     private int totalOfBathroom;
+
+
 
     @Column(name = "cancelled", nullable = false)
     private Boolean cancelled = false;
     private Boolean status = true;
 
     @OneToMany(mappedBy = "room")
-    private List<UserInfo> users;
+    public Set<UserInfo> users;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dom_id", nullable = false, updatable = false)
@@ -85,13 +105,7 @@ public class Room extends AbstractEntity implements Serializable {
         this.pricePerNight = pricePerNight;
     }
 
-    public int getTotalOfBedroom() {
-        return totalOfBedroom;
-    }
 
-    public void setTotalOfBedroom(int totalOfBedroom) {
-        this.totalOfBedroom = totalOfBedroom;
-    }
 
     public int getTotalOfBathroom() {
         return totalOfBathroom;
