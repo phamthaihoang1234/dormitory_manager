@@ -147,7 +147,7 @@ public class RoomController {
     }
 
     @GetMapping("/bookRoom/{id}")
-    public String bookRoom(@PathVariable("id") long id, RedirectAttributes redirect){
+    public String bookRoom(@PathVariable("id") long id, RedirectAttributes redirect) throws Exception {
         Room room = roomService.getOne(id).get();
         UserInfo userInfo = userService.findByUserName(getPrincipal());
 
@@ -166,27 +166,27 @@ public class RoomController {
 
 
         userInfo.setRoom(room);
-        list.add(userService.findByUserName(getPrincipal()));
-        room.setTotalOfNumberStudent(list.size());
+        room.setTotalOfNumberStudent(list.size()+1);
 
-        roomService.save(room);
+
 
         if(room.getPropertyType().getId() == 1){
-            if(room.getUsers().size() == 4){
+            if(room.getTotalOfNumberStudent() == 4){
                 room.setStatus(false);
-                roomService.save(room);
-                return "redirect:/roomHomepage";
+
+
             }
         }
 
         if(room.getPropertyType().getId() == 2){
-            if(room.getUsers().size() == 6){
+            if(room.getTotalOfNumberStudent() == 6){
                 room.setStatus(false);
-                roomService.save(room);
-                return "redirect:/roomHomepage";
+
+
             }
 
         }
+        userService.save(userInfo);
         redirect.addFlashAttribute("globalMessageBook", "Booking successfully.");
         return "redirect:/roomHomepage";
     }
@@ -204,50 +204,56 @@ public class RoomController {
     }
 
     @GetMapping("/returnRoom/{id}")
-    public String returnRoom(@PathVariable("id") long id, RedirectAttributes redirect){
+    public String returnRoom(@PathVariable("id") long id, RedirectAttributes redirect) throws Exception {
         Room room = roomService.getOne(id).get();
         UserInfo userInfo = userService.findByUserName(getPrincipal());
+        int checkReturn = 0;
 
         Set<UserInfo> list = room.getUsers();
 
-        if(checkUserBooked(list) != null)
-        {
-                checkUserBooked(list).setRoom(null);
-                list.remove(userService.findByUserName(getPrincipal()));
-                room.setTotalOfNumberStudent(list.size()-1);
-                roomService.save(room);
-                redirect.addFlashAttribute("globalMessageBook", "Return room successfully.");
-                return "redirect:/roomHomepage";
-        }else
-        {
-                redirect.addFlashAttribute("globalMessageBook", "You dont book this room.");
-                return "redirect:/roomHomepage";
+        UserInfo u = checkUserBooked(list);
+        if(u != null){
+            u.setRoom(null);
+            list.remove(userService.findByUserName(getPrincipal()));
+            room.setTotalOfNumberStudent(list.size());
+            checkReturn = 1;
         }
 
-
         if(room.getPropertyType().getId() == 1){
-            if(room.getUsers().size() == 4){
+            if(room.getTotalOfNumberStudent() == 4){
                 room.setStatus(false);
-                roomService.save(room);
-                return "redirect:/roomHomepage";
+
+
+            }else {
+                room.setStatus(true);
+
             }
 
         }
-
 
 
         if(room.getPropertyType().getId() == 2){
-            if(room.getUsers().size() == 6){
+            if(room.getTotalOfNumberStudent() == 6){
                 room.setStatus(false);
-                roomService.save(room);
-                return "redirect:/roomHomepage";
+
+
+            }else {
+                room.setStatus(true);
+
             }
 
         }
+        if(checkReturn == 1){
+            redirect.addFlashAttribute("globalMessageBook", "Return room successfully.");
+
+        }else {
+            redirect.addFlashAttribute("globalMessageBook", "You dont book this room.");
+        }
+
+        userService.save(userInfo);
         return "redirect:/roomHomepage";
 
     }
-
 
 
 
