@@ -19,8 +19,8 @@
 <div class="main-wrapper">
   <div class="header">
     <div class="header-left">
-      <a th:href="@{/}" class="logo"> <img src="assets/img/hotel_logo.png" width="50" height="70" alt="logo"> <span class="logoclass">KHÁCH SẠN</span> </a>
-      <a th:href="@{/}" class="logo logo-small"> <img src="assets/img/hotel_logo.png" alt="Logo" width="30" height="30"> </a>
+      <a th:href="@{/homepageDom}" class="logo"> <img src="assets/img/hotel_logo.png" width="50" height="70" alt="logo"> <span class="logoclass">KHÁCH SẠN</span> </a>
+      <a th:href="@{/homepageDom}" class="logo logo-small"> <img src="assets/img/hotel_logo.png" alt="Logo" width="30" height="30"> </a>
     </div>
     <a href="javascript:void(0);" id="toggle_btn"> <i class="fe fe-text-align-left"></i> </a>
     <a class="mobile_btn" id="mobile_btn"> <i class="fas fa-bars"></i> </a>
@@ -136,13 +136,13 @@
       </div>
       <div class="row">
         <div class="col-lg-12">
-          <form th:action="@{/saveEdit}" th:object="${hotel}" method="post" >
+          <form th:action="@{/saveEdit}" th:object="${dom}" method="post" >
             <div class="row formtype">
               <div class="col-md-4">
                 <div class="form-group">
                   <label>TÊN</label>
                   <div class="time-icon">
-                    <input type="text" class="form-control" th:field="*{nameOfHotel}" id="datetimepicker4" placeholder="TÊN" required>
+                    <input type="text" class="form-control" th:field="*{nameOfDom}" id="datetimepicker4" placeholder="TÊN" required>
                   </div>
                 </div>
               </div>
@@ -152,7 +152,7 @@
                 <div class="form-group">
                   <label>ĐỊA CHỈ</label>
                   <div>
-                    <input type="text" class="form-control" th:field="*{addressOfHotel}" placeholder="ĐỊA CHỈ" required >
+                    <input type="text" class="form-control" th:field="*{addressOfDom}" placeholder="ĐỊA CHỈ" required >
                   </div>
                 </div>
               </div>

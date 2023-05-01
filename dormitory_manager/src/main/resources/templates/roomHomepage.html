@@ -143,7 +143,7 @@
         <div class="row align-items-center">
           <div class="col">
             <div class="mt-5">
-              <h4 class="card-title float-left mt-2">QUẢN LÝ PHÒNG</h4> <a th:href="@{/createRoom}" class="btn btn-primary float-right veiwbutton">THÊM MỚI</a> </div>
+              <h4 class="card-title float-left mt-2">QUẢN LÝ PHÒNG</h4> <a sec:authorize="hasRole('ADMIN')" th:href="@{/createRoom}" class="btn btn-primary float-right veiwbutton">THÊM MỚI</a> </div>
           </div>
         </div>
       </div>
@@ -180,16 +180,24 @@
                     <td class="text-right">
                       <div class="dropdown dropdown-action"> <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-v ellipse_color"></i></a>
                         <div class="dropdown-menu dropdown-menu-right">
-                          <a class="dropdown-item" th:href="@{findOneRoom/{id}(id=${r.id})}"><i class="fas fa-pencil-alt m-r-5"></i> SỬA</a>
-                          <a class="dropdown-item delBtn" th:href="@{deleteRoom/(id=${r.id})}"><i class="fas fa-trash-alt m-r-5"></i> XÓA</a>
+                          <a sec:authorize="hasRole('ADMIN')" class="dropdown-item" th:href="@{findOneRoom/{id}(id=${r.id})}"><i class="fas fa-pencil-alt m-r-5"></i> SỬA</a>
+                          <a sec:authorize="hasRole('ADMIN')" class="dropdown-item delBtn" th:href="@{deleteRoom/(id=${r.id})}"><i class="fas fa-trash-alt m-r-5"></i> XÓA</a>
 
 
-                          <div th:if="${r.getPropertyType().getId() == 1}">
+                          <div sec:authorize="hasRole('USER')" th:if="${r.getPropertyType().getId() == 1}">
                                 <a th:if="${r.getTotalOfNumberStudent() < 4}" class="dropdown-item delBtn" th:href="@{bookRoom/{id}(id=${r.id})}"><i class="fas fa-trash-alt m-r-5"></i> BOOK PHÒNG</a>
                           </div>
 
-                          <div th:if="${r.getPropertyType().getId() == 2}">
+                          <div sec:authorize="hasRole('USER')" th:if="${r.getPropertyType().getId() == 1}">
+                            <a class="dropdown-item delBtn" th:href="@{returnRoom/{id}(id=${r.id})}"><i class="fas fa-trash-alt m-r-5"></i> TRẢ PHÒNG</a>
+                          </div>
+
+                          <div sec:authorize="hasRole('USER')" th:if="${r.getPropertyType().getId() == 2}">
                             <a th:if="${r.getTotalOfNumberStudent() < 6}" class="dropdown-item delBtn" th:href="@{bookRoom/{id}(id=${r.id})}"><i class="fas fa-trash-alt m-r-5"></i> BOOK PHÒNG</a>
+                          </div>
+
+                          <div sec:authorize="hasRole('USER')" th:if="${r.getPropertyType().getId() == 2}">
+                            <a class="dropdown-item delBtn" th:href="@{returnRoom/{id}(id=${r.id})}"><i class="fas fa-trash-alt m-r-5"></i> TRẢ PHÒNG</a>
                           </div>
 
                         </div>

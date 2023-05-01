@@ -133,7 +133,7 @@
         <div class="row align-items-center">
           <div class="col">
             <div class="mt-5">
-              <h4 class="card-title float-left mt-2">Quản lý DOM</h4> <a th:href="@{/showFormCreDom}" class="btn btn-primary float-right veiwbutton">Thêm mới</a> </div>
+              <h4 class="card-title float-left mt-2">Quản lý DOM</h4> <a sec:authorize="hasRole('ADMIN')" th:href="@{/showFormCreDom}" class="btn btn-primary float-right veiwbutton">Thêm mới</a> </div>
           </div>
         </div>
       </div>
@@ -163,10 +163,15 @@
                     </td>
                     <td class="text-right">
                       <div class="dropdown dropdown-action"> <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-v ellipse_color"></i></a>
-                        <div class="dropdown-menu dropdown-menu-right">
+                        <div sec:authorize="hasRole('ADMIN')" class="dropdown-menu dropdown-menu-right">
                           <a class="dropdown-item" th:href="@{findOne/{id}(id=${d.id})}"><i class="fas fa-pencil-alt m-r-5"></i> SỬA</a>
                           <a class="dropdown-item delBtn" th:href="@{delete/(id=${d.id})}"><i class="fas fa-trash-alt m-r-5"></i> XÓA</a>
                           <a class="dropdown-item" th:href="@{/manageRoom/__${d.getId()}__ }"><i class="fas fa-pencil-alt m-r-5"></i> QUẢN LÝ PHÒNG</a>
+                        </div>
+
+                        <div sec:authorize="hasRole('USER')" class="dropdown-menu dropdown-menu-right">
+
+                          <a class="dropdown-item" th:href="@{/manageRoom/__${d.getId()}__ }"><i class="fas fa-pencil-alt m-r-5"></i> BOOK PHÒNG</a>
                         </div>
                       </div>
                     </td>

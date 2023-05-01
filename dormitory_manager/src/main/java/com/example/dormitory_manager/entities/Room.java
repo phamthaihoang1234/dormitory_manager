@@ -42,7 +42,7 @@ public class Room extends AbstractEntity implements Serializable {
 
 
     @Column(name = "cancelled", nullable = false)
-    private Boolean cancelled = false;
+    private Boolean cancelled = true;
     private Boolean status = true;
 
     @OneToMany(mappedBy = "room")

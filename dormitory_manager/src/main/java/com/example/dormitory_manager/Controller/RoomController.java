@@ -127,7 +127,9 @@ public class RoomController {
 
     @GetMapping("/deleteRoom")
     public String deleteRoomById(long id){
-        roomService.deleteById(id);
+        Room r = roomService.getOne(id).get();
+        r.setCancelled(false);
+        roomService.save(r);
         return "redirect:/roomHomepage";
     }
 
@@ -147,15 +149,22 @@ public class RoomController {
     @GetMapping("/bookRoom/{id}")
     public String bookRoom(@PathVariable("id") long id, RedirectAttributes redirect){
         Room room = roomService.getOne(id).get();
-        System.out.println("so nguoi da thue la" + room.getUsers().size());
+        UserInfo userInfo = userService.findByUserName(getPrincipal());
 
         Set<UserInfo> list = room.getUsers();
 
         if(room.getUsers().isEmpty()) {
              list = new HashSet<>();
+        }else {
+            for (UserInfo u: list) {
+                if(u.getUsername() == userInfo.getUsername()){
+                    redirect.addFlashAttribute("globalMessageBook", "You booked this room , you cannot book anymore.");
+                    return "redirect:/roomHomepage";
+                }
+            }
         }
 
-        UserInfo userInfo = userService.findByUserName(getPrincipal());
+
         userInfo.setRoom(room);
         list.add(userService.findByUserName(getPrincipal()));
         room.setTotalOfNumberStudent(list.size());
@@ -181,6 +190,64 @@ public class RoomController {
         redirect.addFlashAttribute("globalMessageBook", "Booking successfully.");
         return "redirect:/roomHomepage";
     }
+
+    public UserInfo checkUserBooked(Set<UserInfo> list){
+        UserInfo userInfo = userService.findByUserName(getPrincipal());
+        for (UserInfo u: list) {
+            if(u.getUsername() == userInfo.getUsername()){
+
+                return u;
+            }
+        }
+        return null;
+
+    }
+
+    @GetMapping("/returnRoom/{id}")
+    public String returnRoom(@PathVariable("id") long id, RedirectAttributes redirect){
+        Room room = roomService.getOne(id).get();
+        UserInfo userInfo = userService.findByUserName(getPrincipal());
+
+        Set<UserInfo> list = room.getUsers();
+
+        if(checkUserBooked(list) != null)
+        {
+                checkUserBooked(list).setRoom(null);
+                list.remove(userService.findByUserName(getPrincipal()));
+                room.setTotalOfNumberStudent(list.size()-1);
+                roomService.save(room);
+                redirect.addFlashAttribute("globalMessageBook", "Return room successfully.");
+                return "redirect:/roomHomepage";
+        }else
+        {
+                redirect.addFlashAttribute("globalMessageBook", "You dont book this room.");
+                return "redirect:/roomHomepage";
+        }
+
+
+        if(room.getPropertyType().getId() == 1){
+            if(room.getUsers().size() == 4){
+                room.setStatus(false);
+                roomService.save(room);
+                return "redirect:/roomHomepage";
+            }
+
+        }
+
+
+
+        if(room.getPropertyType().getId() == 2){
+            if(room.getUsers().size() == 6){
+                room.setStatus(false);
+                roomService.save(room);
+                return "redirect:/roomHomepage";
+            }
+
+        }
+        return "redirect:/roomHomepage";
+
+    }
+
 
 
 

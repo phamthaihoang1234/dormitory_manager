@@ -15,13 +15,10 @@ public class DomServiceImpl implements DomService{
 
     @Override
     public Iterable<Dom> findAll() {
-        return domRepository.findAll();
+        return domRepository.findAllDomAvailable();
     }
 
-    @Override
-    public Iterable<Dom> findAllDomByUserId(long id) {
-        return domRepository.findAllDomByUserId(id);
-    }
+
 
     @Override
     public Optional<Dom> findById(Long id) {

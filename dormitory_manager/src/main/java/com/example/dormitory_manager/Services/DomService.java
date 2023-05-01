@@ -9,7 +9,7 @@ public interface DomService {
 
     Dom save(Dom province);
 
-    Iterable<Dom> findAllDomByUserId(long id);
+
 
     void delete(Long id);
 

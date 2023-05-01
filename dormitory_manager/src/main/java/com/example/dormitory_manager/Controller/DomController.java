@@ -2,7 +2,9 @@ package com.example.dormitory_manager.Controller;
 
 import com.example.dormitory_manager.Repository.DomRepository;
 import com.example.dormitory_manager.Services.DomService;
+import com.example.dormitory_manager.Services.RoomService;
 import com.example.dormitory_manager.entities.Dom;
+import com.example.dormitory_manager.entities.Room;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,6 +24,10 @@ public class DomController {
 
     @Autowired
     private DomRepository domRepository;
+
+
+    @Autowired
+    private RoomService roomService;
 
 
 
@@ -75,7 +81,13 @@ public class DomController {
 
     @GetMapping("/delete")
     public String deleteHotel(long id) {
-        domService.delete(id);
+        Dom dom = domService.findById(id).get();
+        dom.setStatus(false);
+        for (Room r: roomService.findAllByDomId(id)) {
+            r.setCancelled(false);
+            roomService.save(r);
+        }
+        domService.save(dom);
         return "redirect:/homepageDom";
     }
 
