@@ -76,7 +76,13 @@ public class RoomController {
 
     @GetMapping("/roomHomepage")
     public String homepageRoom(Model model){
+        UserInfo userInfo = userService.findByUserName(getPrincipal());
         model.addAttribute("rooms",roomService.findAllByDomId(idDom));
+        if(userInfo.getRoom() != null){
+            model.addAttribute("idRoomOfUser",userInfo.getRoom().getId());
+        }else {
+            model.addAttribute("idRoomOfUser",-1);
+        }
 
         return "roomHomepage";
     }
@@ -162,6 +168,11 @@ public class RoomController {
                     return "redirect:/roomHomepage";
                 }
             }
+        }
+
+        if(userInfo.getRoom() != null){
+            redirect.addFlashAttribute("globalMessageBook", "You booked another room , you cannot book anymore.");
+            return "redirect:/roomHomepage";
         }
 
 

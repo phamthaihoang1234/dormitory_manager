@@ -185,19 +185,19 @@
 
 
                           <div sec:authorize="hasRole('USER')" th:if="${r.getPropertyType().getId() == 1}">
-                                <a th:if="${r.getTotalOfNumberStudent() < 4}" class="dropdown-item delBtn" th:href="@{bookRoom/{id}(id=${r.id})}"><i class="fas fa-trash-alt m-r-5"></i> BOOK PHÒNG</a>
+                                <a th:if="${r.getTotalOfNumberStudent() < 4 && idRoomOfUser != r.getId()}" class="dropdown-item delBtn" th:href="@{bookRoom/{id}(id=${r.id})}"><i class="fas fa-trash-alt m-r-5"></i> BOOK PHÒNG</a>
                           </div>
 
                           <div sec:authorize="hasRole('USER')" th:if="${r.getPropertyType().getId() == 1}">
-                            <a class="dropdown-item delBtn" th:href="@{returnRoom/{id}(id=${r.id})}"><i class="fas fa-trash-alt m-r-5"></i> TRẢ PHÒNG</a>
+                            <a th:if="${idRoomOfUser == r.getId()}" class="dropdown-item delBtn" th:href="@{returnRoom/{id}(id=${r.id})}"><i class="fas fa-trash-alt m-r-5"></i> TRẢ PHÒNG</a>
                           </div>
 
                           <div sec:authorize="hasRole('USER')" th:if="${r.getPropertyType().getId() == 2}">
-                            <a th:if="${r.getTotalOfNumberStudent() < 6}" class="dropdown-item delBtn" th:href="@{bookRoom/{id}(id=${r.id})}"><i class="fas fa-trash-alt m-r-5"></i> BOOK PHÒNG</a>
+                            <a th:if="${r.getTotalOfNumberStudent() < 6 && idRoomOfUser != r.getId()}" class="dropdown-item delBtn" th:href="@{bookRoom/{id}(id=${r.id})}"><i class="fas fa-trash-alt m-r-5"></i> BOOK PHÒNG</a>
                           </div>
 
                           <div sec:authorize="hasRole('USER')" th:if="${r.getPropertyType().getId() == 2}">
-                            <a class="dropdown-item delBtn" th:href="@{returnRoom/{id}(id=${r.id})}"><i class="fas fa-trash-alt m-r-5"></i> TRẢ PHÒNG</a>
+                            <a th:if="${idRoomOfUser == r.getId()}" class="dropdown-item delBtn" th:href="@{returnRoom/{id}(id=${r.id})}"><i class="fas fa-trash-alt m-r-5"></i> TRẢ PHÒNG</a>
                           </div>
 
                         </div>
@@ -232,7 +232,7 @@
           </div>
           <div class="modal-body">
             <p class="alert alert-danger">
-              BẠN CÓ CHẮC CHẮN MUỐN BOOK PHÒNG NÀY KHÔNG KHÔNG?
+              BẠN CÓ CHẮC CHẮN MUỐN BOOK PHÒNG NÀY KHÔNG ?
             </p>
           </div>
           <div class="modal-footer">
@@ -244,6 +244,8 @@
         </div>
       </div>
     </div>
+
+
 
   </div>
 </div>
