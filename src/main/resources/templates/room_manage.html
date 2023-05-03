@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title>View room</title>
+</head>
+<style>
+  thead {
+    border: 1px solid black;
+  }
+
+  th,
+  td {
+    border: 1px solid black;
+    padding: 8px;
+  }
+
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid black;
+    /* Thêm đường biên 1px đen cho bảng */
+  }
+
+  table td {
+    border: 1px solid gray;
+    /* Thêm đường biên 1px xám cho các ô trong bảng */
+    padding: 8px;
+    /* Thêm padding cho các ô trong bảng */
+  }
+
+  div {
+    text-align: center;
+  }
+</style>
+
+<body>
+  <div>
+    Room manage
+    <br>
+    <a class="h3" href="room/new">Add new room</a>
+  </div>
+  <div id="alert" th:if="${message}" class="alert alert-danger">
+    <span th:text="${message}"></span>
+    <button type="button" class="close" onclick="closeAlert()">×</button>
+  </div>
+  
+  <script>
+    function closeAlert() {
+      document.getElementById("alert").style.display = "none";
+    }
+  </script>
+   
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>        
+        <th>Description</th>
+        <th>Address</th>
+        <th>Price per night</th>
+        <th>Total of bedroom</th>
+        <th>Total of bathroom</th>
+        <th>Cancelled</th>
+        <th>Status</th>        
+        <th>Attribute</th>
+      </tr>
+    </thead>
+    <tbody>
+      <th:block th:each="room : ${listRoom}">
+        <tr>
+          <td th:text="${room.id}"></td>
+          <td th:text="${room.name}"></td>
+          <td th:text="${room.description}"></td>
+          <td th:text="${room.address}"></td>
+          <td th:text="${room.pricePerNight}"></td>
+          <td th:text="${room.totalOfBedroom}"></td>
+          <td th:text="${room.totalOfBathroom}"></td>
+          <td th:text="${room.cancelled}"></td>
+          <td th:text="${room.status}"></td>          
+          <td>
+            <a class="h4 mr-3" th:href="@{'room/edit&id=' + ${room.id}}">Edit</a>
+            <a class="h4 mr-3" th:href="@{'room/delete&id=' + ${room.id}}">Delete</a>
+          </td>
+        </tr>
+      </th:block>
+    </tbody>
+  </table>
+</body>
+
+</html>

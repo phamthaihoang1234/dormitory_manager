@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>[[${pageTitle}]]</title>
+</head>
+<body>
+    <h1>[[${pageTitle}]]</h1>
+    <form action="/room/save" method="post" th:object="${room}">
+        <input type="hidden" th:field="*{id}">
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name" th:field="*{name}"><br>
+        <label for="description">Description:</label><br>
+        <input type="text" id="description" name="description" th:field="*{description}"><br>
+        <label for="address">Address:</label><br>
+        <input type="text" id="address" name="address" th:field="*{address}"><br>
+        <label for="price_per_night">Price per night:</label><br>
+        <input type="number" id="price_per_night" name="price_per_night" th:field="*{pricePerNight}"><br>
+        <label for="totalOfBedroom">Total of bedroom:</label><br>
+        <input type="number" id="totalOfBedroom" name="totalOfBedroom" th:field="*{totalOfBedroom}"><br>
+        <label for="totalOfBathroom">Total of bathroom:</label><br>
+        <input type="number" id="totalOfBathroom" name="totalOfBathroom" th:field="*{totalOfBathroom}"><br>
+        <label for="cancelled">Cancelled:</label><br>
+        <input type="checkbox" id="cancelled" name="cancelled" th:field="*{cancelled}"><br>
+        <label for="status">Status:</label><br>
+        <input type="checkbox" id="status" name="status" th:field="*{status}"><br><br>
+        <input type="submit" value="Save">
+        <input type="button" value="Cancel" onclick="window.location.href='/room'">
+    </form>
+</body>
+</html>
