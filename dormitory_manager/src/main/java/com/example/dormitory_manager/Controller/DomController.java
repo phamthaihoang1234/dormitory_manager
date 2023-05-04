@@ -30,10 +30,6 @@ public class DomController {
     private RoomService roomService;
 
 
-
-
-
-
     @GetMapping("/homepageDom")
     public String homepageHotel(Model model) {
         model.addAttribute("doms", domService.findAll());
