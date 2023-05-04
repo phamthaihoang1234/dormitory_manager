@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Users</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"  />
+</head>
+<body>
+<div class="container-fluid text-center">
+    <div><h1>Manage Users</h1></div>
+    <a class="h3" th:href="@{/createBlog}">Add Blog</a>
+    <div>
+    <table class="table table-bordered">
+        <hr></hr>
+      <!--  <thead class="thead-dark">
+        <tr>
+            <p>ID</p>
+            <p>Title</p>
+            <p>Author</p>
+            <p>Description</p>
+            <th></th>
+
+
+        </tr>
+        </thead>-->
+        <tr th:each="b : ${blogs}">
+            <!--bold-- th:text="${b.getId()}" ></bold-->
+            <h3 th:text="${b.getTitle()}"></h3>
+            <h4 th:text="${b.script}"></h4>
+            <ul th:text="${b.getDescription()}"></ul>
+            <hr></hr>
+            <bold>
+                <a class="h4 mr-3" th:href="@{'/edit/' + ${b.id}}">Edit</a>
+                <a class="h4" th:href="@{deleteBlog/(id=${b.id})}">Delete</a>
+            </bold>
+            <hr></hr>
+
+
+
+        </tr>
+    </table>
+
+    </div>
+</div>
+
+
+</body>

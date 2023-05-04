@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Add Blog Post - Dormitory Manager</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- You can include any additional CSS or JavaScript files here -->
+</head>
+<body>
+<!-- The HTML structure for your add blog post page goes here -->
+<header>
+	<h1>Add Blog Post</h1>
+	<!-- You can add any additional header elements here -->
+</header>
+<main>
+	<form action="/saveEditBlog" method="post" th:object="${blog}">
+		<label>ID: </label>
+		<input type="text"  th:field="*{id}">
+		<label >Title:</label>
+		<input type="text"   th:field="*{title}" >
+		<label >Author:</label>
+		<input type="text"   th:field="*{script}">
+		<label >Description:</label>
+		<input type="text"  th:field="*{description}">
+
+		<input type="submit" value="Save">
+		<!-- You can add any additional form elements here, such as a cancel or reset button -->
+	</form>
+</main>
+<footer>
+	<!-- You can add any additional footer elements here -->
+</footer>
+<!-- You can include any additional JavaScript files here -->
+</body>
+</html>
