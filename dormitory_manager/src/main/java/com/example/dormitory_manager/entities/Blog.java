@@ -42,11 +42,11 @@ public class Blog {
     @Transient
     MultipartFile image;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String imgSrc;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id",nullable = false, updatable = false)
+    @JoinColumn(name = "user_id",nullable = true, updatable = true)
     private UserInfo User;
 
     public Blog() {
