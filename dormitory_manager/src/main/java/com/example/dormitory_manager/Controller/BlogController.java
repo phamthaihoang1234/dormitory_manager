@@ -57,7 +57,7 @@ public class BlogController {
 
     @GetMapping("/all-blog")
     public String Blog(Model model){
-        model.addAttribute("blogs", blogService.findAll());
+        model.addAttribute("blogs", blogRepository.findAllBlog());
         return "Blog/all-blog";
     }
 
@@ -88,13 +88,13 @@ public class BlogController {
 //        blog.setImgSrc(fileName);
 //        blog.setUser(UserService.findByUserName(getPrincipal()));
 //
-        blogService.save(blog);
+        blogRepository.save(blog);
         return "redirect:all-blog";
     }
 
     @GetMapping("/edit/{id}")
     public String findBlogById(@PathVariable("id") long id , Model model){
-        model.addAttribute("blog", blogService.findById(id).get());
+        model.addAttribute("blog", blogRepository.findById(id).get());
 
         return "/Blog/edit-blog";
     }
@@ -109,16 +109,6 @@ public class BlogController {
 
     @PostMapping("/saveEditBlog")
     public String updateBlog(@ModelAttribute Blog blog){
-        Optional<Blog> oldBlog = blogService.findById(blog.getId());
-
-
-        oldBlog.get().setDescription(blog.getDescription());
-        oldBlog.get().setScript(blog.getScript());
-        oldBlog.get().setTitle(blog.getTitle());
-        oldBlog.get().setId(blog.getId());
-
-
-
 
 //        MultipartFile multipartFile = blog.getImage();
 //        String fileName = multipartFile.getOriginalFilename();
@@ -129,7 +119,7 @@ public class BlogController {
 //            e.printStackTrace();
 //        }
 //        blog.setImgSrc(fileName);
-        blogService.save(blog);
+        blogRepository.save(blog);
 
 
         return "redirect:/all-blog";

@@ -25,6 +25,7 @@ public class Blog {
     }
 
     @Column(name = "Script")
+
     private String script;
 
     @Column(name = "Description")
