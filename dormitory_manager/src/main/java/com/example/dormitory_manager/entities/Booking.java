@@ -31,11 +31,7 @@ public class Booking extends AbstractEntity implements Serializable {
     @Column(name = "number_of_guests")
     private int numberOfGuests;
 
-//    @Column(name = "number_of_children")
-//    private Byte numberOfChildren;
-//
-//    @Column(name = "number_of_infants")
-//    private Byte numberOfInfants;
+
 
     private LocalDate startDate;
     private LocalDate endDate;
@@ -69,10 +65,9 @@ public class Booking extends AbstractEntity implements Serializable {
     @JsonIgnore
     private List<Review> reviews;
 
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+ /*   @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "room_id")
-//    @JsonIgnore
-    private Room room;
+    private Room room;*/
 
     public int getNumberOfGuests() {
         return numberOfGuests;
@@ -130,11 +125,5 @@ public class Booking extends AbstractEntity implements Serializable {
         this.user = user;
     }
 
-    public Room getRoom() {
-        return room;
-    }
 
-    public void setRoom(Room room) {
-        this.room = room;
-    }
 }

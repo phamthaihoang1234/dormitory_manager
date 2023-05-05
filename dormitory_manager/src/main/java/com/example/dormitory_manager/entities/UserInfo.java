@@ -53,6 +53,19 @@ public class UserInfo extends AbstractEntity implements Serializable {
     @Transient
     private String token;
 
+
+    @ManyToOne
+    @JoinColumn(name = "room_id", nullable = true)
+    private Room room;
+
+    public Room getRoom() {
+        return room;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
+    }
+
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
     private List<WebReview> comments;
 

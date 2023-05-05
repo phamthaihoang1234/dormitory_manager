@@ -6,6 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "rooms")
@@ -16,10 +17,61 @@ public class Room extends AbstractEntity implements Serializable {
     private String address;
     @Column(name = "price_per_night")
     private Double pricePerNight;
-    @Column(name = "total_of_bedroom")
-    private int totalOfBedroom;
+    @Column(name = "numberStudent_of_room")
+    private int totalOfNumberStudent;
+
+    public int getTotalOfNumberStudent() {
+        return totalOfNumberStudent;
+    }
+
+    public void setTotalOfNumberStudent(int totalOfNumberStudent) {
+        this.totalOfNumberStudent = totalOfNumberStudent;
+    }
+
+    public Set<UserInfo> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<UserInfo> users) {
+        this.users = users;
+    }
+
     @Column(name = "total_of_bathroom")
     private int totalOfBathroom;
+
+
+
+    @Column(name = "cancelled", nullable = false)
+    private Boolean cancelled = true;
+    private Boolean status = true;
+
+    @OneToMany(mappedBy = "room")
+    public Set<UserInfo> users;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "dom_id", nullable = false, updatable = false)
+    private Dom dom;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "discount_id", nullable = true, updatable = false)
+    private Discount discount;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "property_type",nullable = true, updatable = false)
+    private PropertyType propertyType;
+
+    @Transient
+    private  Object avgRatting;
+
+    @Transient
+    MultipartFile image;
+
+
+    @Column(nullable = true)
+    private String imgSrc3;
+
+
+
 
     public String getName() {
         return name;
@@ -53,13 +105,7 @@ public class Room extends AbstractEntity implements Serializable {
         this.pricePerNight = pricePerNight;
     }
 
-    public int getTotalOfBedroom() {
-        return totalOfBedroom;
-    }
 
-    public void setTotalOfBedroom(int totalOfBedroom) {
-        this.totalOfBedroom = totalOfBedroom;
-    }
 
     public int getTotalOfBathroom() {
         return totalOfBathroom;
@@ -85,21 +131,8 @@ public class Room extends AbstractEntity implements Serializable {
         this.status = status;
     }
 
-    public List<Booking> getBookings() {
-        return bookings;
-    }
 
-    public void setBookings(List<Booking> bookings) {
-        this.bookings = bookings;
-    }
 
-    public UserInfo getUser() {
-        return user;
-    }
-
-    public void setUser(UserInfo user) {
-        this.user = user;
-    }
 
     public Dom getDom() {
         return dom;
@@ -149,42 +182,6 @@ public class Room extends AbstractEntity implements Serializable {
         this.imgSrc3 = imgSrc3;
     }
 
-    @Column(name = "cancelled", nullable = false)
-    private Boolean cancelled = false;
-    private Boolean status = true;
-
-//    @OneToMany(orphanRemoval = true, mappedBy = "room")
-//    private List<RoomImage> roomImages;
-
-    @OneToMany(mappedBy = "room")
-    @JsonIgnore
-    private List<Booking> bookings;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false, updatable = false)
-    private UserInfo user;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "dom_id", nullable = false, updatable = false)
-    private Dom dom;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "discount_id", nullable = false, updatable = false)
-    private Discount discount;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "property_type",nullable = false, updatable = false)
-    private PropertyType propertyType;
-
-    @Transient
-    private  Object avgRatting;
-
-    @Transient
-    MultipartFile image;
-
-
-    @Column(nullable = false)
-    private String imgSrc3;
 
 
 }

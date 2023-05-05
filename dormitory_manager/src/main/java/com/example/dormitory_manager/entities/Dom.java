@@ -4,44 +4,36 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table (name = "hotel")
+@Table (name = "dom")
 public class Dom {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Boolean status = true;
-    private String nameOfHotel ;
-    private String addressOfHotel;
+    private String nameOfDom;
+    private String addressOfDom;
     private String iframe;
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="userId", nullable = false, updatable = false)
-    private UserInfo user;
 
-    public UserInfo getUser() {
-        return user;
+
+    public String getAddressOfDom() {
+        return addressOfDom;
     }
 
-    public void setUser(UserInfo user) {
-        this.user = user;
+    public void setAddressOfDom(String addressOfDom) {
+        this.addressOfDom = addressOfDom;
     }
 
     public String getIframe() {
         return iframe;
     }
 
-    public String getAddressOfHotel() {
-        return addressOfHotel;
-    }
 
-    public void setAddressOfHotel(String addressOfHotel) {
-        this.addressOfHotel = addressOfHotel;
-    }
+
     private int hotel_standard;
     private String phone;
 
@@ -81,12 +73,12 @@ public class Dom {
         this.status = status;
     }
 
-    public String getNameOfHotel() {
-        return nameOfHotel;
+    public String getNameOfDom() {
+        return nameOfDom;
     }
 
-    public void setNameOfHotel(String nameOfHotel) {
-        this.nameOfHotel = nameOfHotel;
+    public void setNameOfDom(String nameOfHotel) {
+        this.nameOfDom = nameOfHotel;
     }
 
     public void setIframe(String iframe) {
