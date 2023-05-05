@@ -5,9 +5,10 @@ import com.example.dormitory_manager.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
@@ -16,17 +17,15 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    // Get all users
     @GetMapping
-    public ResponseEntity<List<UserInfo>> getUsers() {
-        List<UserInfo> users = userService.getAllUsers();
+    public ResponseEntity<Iterable<UserInfo>> getUsers() {
+        Iterable<UserInfo> users = userService.findAll();
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    // Get user by ID
     @GetMapping("/{id}")
     public ResponseEntity<UserInfo> getUserById(@PathVariable("id") Long id) {
-        UserInfo user = userService.getUserById(id);
+        UserInfo user = userService.findById(id).orElse(null);
         if (user != null) {
             return new ResponseEntity<>(user, HttpStatus.OK);
         } else {
@@ -34,32 +33,41 @@ public class UserController {
         }
     }
 
-    // Create a new user
     @PostMapping
     public ResponseEntity<UserInfo> createUser(@RequestBody UserInfo user) {
-        UserInfo newUser = userService.createUser(user);
-        return new ResponseEntity<>(newUser, HttpStatus.CREATED);
+        try {
+            UserInfo newUser = userService.save(user);
+            return new ResponseEntity<>(newUser, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
-    // Update an existing user
     @PutMapping("/{id}")
     public ResponseEntity<UserInfo> updateUser(@PathVariable("id") Long id, @RequestBody UserInfo user) {
-        UserInfo updatedUser = userService.updateUser(id, user);
-        if (updatedUser != null) {
-            return new ResponseEntity<>(updatedUser, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        try {
+            user.setId(id);
+            UserInfo updatedUser = userService.updateInfor(user);
+            if (updatedUser != null) {
+                return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
-    // Delete a user
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteUser(@PathVariable("id") Long id) {
-        boolean result = userService.deleteUser(id);
-        if (result) {
-            return new ResponseEntity<>(HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserName = authentication.getName();
+        UserInfo currentUser = userService.findByUserName(currentUserName);
+        if (currentUser.getId() == id) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
+        userService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
