@@ -1,9 +1,10 @@
 package com.example.dormitory_manager.Controller;
 
 import com.example.dormitory_manager.Services.RoleService;
-import com.example.dormitory_manager.Services.UserService;
+
 import com.example.dormitory_manager.entities.Role;
 import com.example.dormitory_manager.entities.UserInfo;
+import com.example.dormitory_manager.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;

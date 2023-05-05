@@ -1,4 +1,4 @@
-package com.example.dormitory_manager.Services;
+package com.example.dormitory_manager.services;
 
 
 import com.example.dormitory_manager.Repository.RoleRepository;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class RoleServiceImpl implements RoleService {
+public class RoleServiceImpl implements com.example.dormitory_manager.Services.RoleService {
 
     @Autowired
     private RoleRepository roleRepository;

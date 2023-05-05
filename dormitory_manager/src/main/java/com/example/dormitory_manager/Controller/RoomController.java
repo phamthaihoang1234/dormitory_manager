@@ -2,9 +2,9 @@ package com.example.dormitory_manager.Controller;
 
 import com.example.dormitory_manager.Repository.PropertyTypeRepository;
 import com.example.dormitory_manager.Repository.RoomRepository;
-import com.example.dormitory_manager.Services.DomService;
+import com.example.dormitory_manager.services.DomService;
 import com.example.dormitory_manager.Services.RoomService;
-import com.example.dormitory_manager.Services.UserService;
+import com.example.dormitory_manager.services.UserService;
 import com.example.dormitory_manager.entities.Room;
 import com.example.dormitory_manager.entities.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;

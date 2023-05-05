@@ -1,7 +1,7 @@
 package com.example.dormitory_manager.Controller;
 
 import com.example.dormitory_manager.Repository.DomRepository;
-import com.example.dormitory_manager.Services.DomService;
+import com.example.dormitory_manager.services.DomService;
 import com.example.dormitory_manager.Services.RoomService;
 import com.example.dormitory_manager.entities.Dom;
 import com.example.dormitory_manager.entities.Room;

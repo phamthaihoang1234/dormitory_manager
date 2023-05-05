@@ -1,9 +1,11 @@
-package com.example.dormitory_manager.Services;
+package com.example.dormitory_manager.services;
 
 import com.example.dormitory_manager.entities.UserInfo;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+
 
 public interface UserService extends UserDetailsService {
     Iterable<UserInfo> findAll();

@@ -1,6 +1,7 @@
 package com.example.dormitory_manager.configuration;
 
-import com.example.dormitory_manager.Services.UserServiceImpl;
+
+import com.example.dormitory_manager.services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

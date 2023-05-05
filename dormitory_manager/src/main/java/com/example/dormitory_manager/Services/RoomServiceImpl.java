@@ -1,4 +1,4 @@
-package com.example.dormitory_manager.Services;
+package com.example.dormitory_manager.services;
 
 import com.example.dormitory_manager.Repository.RoomRepository;
 import com.example.dormitory_manager.entities.Room;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class RoomServiceImpl implements RoomService {
+public class RoomServiceImpl implements com.example.dormitory_manager.Services.RoomService {
     @Autowired
     private RoomRepository roomRepository;
 

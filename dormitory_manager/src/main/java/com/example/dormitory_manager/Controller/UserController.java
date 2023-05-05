@@ -1,19 +1,19 @@
 package com.example.dormitory_manager.Controller;
 
 import com.example.dormitory_manager.entities.UserInfo;
-import com.example.dormitory_manager.services.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/api/users")
+@Controller
 public class UserController {
 
-    @Autowired
+   /* @Autowired
     private UserService UserService;
 
     // Get all users
@@ -61,5 +61,5 @@ public class UserController {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-    }
+    }*/
 }
