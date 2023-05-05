@@ -2,25 +2,22 @@ package com.example.dormitory_manager.Controller;
 
 
 import com.example.dormitory_manager.entities.Blog;
-//import com.example.dormitory_manager.entities.Room;
+
 import com.example.dormitory_manager.repositories.BlogRepository;
-import com.example.dormitory_manager.services.BlogService;
-import com.example.dormitory_manager.services.UserService;
+
+import com.example.dormitory_manager.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
-import org.springframework.util.FileCopyUtils;
+
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.io.File;
-import java.io.IOException;
-import java.security.Provider;
+
 import java.util.Optional;
 
 @Controller
@@ -32,7 +29,7 @@ public class BlogController {
     private UserService UserService;
 
     @Autowired
-    private BlogService blogService;
+    private com.example.dormitory_manager.services.BlogService blogService;
 
 
 //    @GetMapping("/blog")
@@ -88,6 +85,7 @@ public class BlogController {
 //        blog.setImgSrc(fileName);
 //        blog.setUser(UserService.findByUserName(getPrincipal()));
 //
+        System.out.println("Description blog là : "+blog.getDescription());
         blogService.save(blog);
         return "redirect:all-blog";
     }

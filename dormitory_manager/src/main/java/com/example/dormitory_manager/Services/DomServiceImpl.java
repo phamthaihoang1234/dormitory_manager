@@ -1,4 +1,4 @@
-package com.example.dormitory_manager.services;
+package com.example.dormitory_manager.Services;
 
 import com.example.dormitory_manager.Repository.DomRepository;
 import com.example.dormitory_manager.entities.Dom;

@@ -13,7 +13,7 @@
 	<!-- You can add any additional header elements here -->
 </header>
 <main>
-	<form action="/saveEditBlog" method="post" th:object="${blog}">
+	<form th:action="@{/saveEditBlog}" method="post" th:object="${blog}">
 		<label>ID: </label>
 		<input type="text"  th:field="*{id}">
 		<label >Title:</label>

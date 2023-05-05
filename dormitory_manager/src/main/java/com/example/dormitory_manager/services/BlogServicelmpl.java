@@ -1,5 +1,5 @@
 
-package com.example.dormitory_manager.services;
+package com.example.dormitory_manager.Services;
 
 
 import com.example.dormitory_manager.entities.Blog;
@@ -10,8 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-
-public class BlogServicelmpl implements BlogService {
+public class BlogServicelmpl implements com.example.dormitory_manager.services.BlogService {
     @Autowired
     private BlogRepository blogRepository;
 

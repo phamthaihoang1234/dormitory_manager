@@ -1,7 +1,8 @@
 package com.example.dormitory_manager.configuration;
 
 
-import com.example.dormitory_manager.services.UserServiceImpl;
+
+import com.example.dormitory_manager.Services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -72,7 +73,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/","login","/register").permitAll()
+        http.authorizeRequests().antMatchers("/","login","/register","/saveBlog").permitAll()
                 .antMatchers(HttpMethod.POST).permitAll()
                 //.antMatchers("/login").access("hasAnyRole('ROLE_USER')")
                 .antMatchers("/manageHotels").access("hasRole('ROLE_OWNER')")
