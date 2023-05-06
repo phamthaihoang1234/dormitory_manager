@@ -1,7 +1,7 @@
 package com.example.dormitory_manager.Services;
 
 import com.example.dormitory_manager.Repository.UseRepository;
-import com.example.dormitory_manager.entities.UserInfo;
+import com.example.dormitory_manager.entities.UserInfor;
 import com.example.dormitory_manager.entities.UserPrinciple;
 import org.springframework.context.MessageSource;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,23 +25,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Iterable<UserInfo> findAll() {
+    public Iterable<UserInfor> findAll() {
         return userRepository.findAll();
     }
 
     @Override
-    public Optional<UserInfo> findById(Long id) {
+    public Optional<UserInfor> findById(Long id) {
         return userRepository.findById(id);
     }
 
 
     @Override
-    public UserInfo findByEmail(String email) {
+    public UserInfor findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
     @Override
-    public UserInfo findByUserName(String username) {
+    public UserInfor findByUserName(String username) {
         return userRepository.findByUsername(username);
     }
 
@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<UserInfo> existsByUsernameAndPassword(String email, String password) throws Exception {
+    public Optional<UserInfor> existsByUsernameAndPassword(String email, String password) throws Exception {
         return userRepository.existsByUsernameAndPassword(email,password);
     }
 
@@ -61,19 +61,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserInfo save(UserInfo user) throws Exception {
+    public UserInfor save(UserInfor user) throws Exception {
 
         return userRepository.save(user);
     }
 
     @Override
-    public boolean changePassword(UserInfo user) throws Exception{
+    public boolean changePassword(UserInfor user) throws Exception{
         return true;
 
     }
 
     @Override
-    public UserInfo updateInfor(UserInfo user) throws Exception{
+    public UserInfor updateInfor(UserInfor user) throws Exception{
         user.setName(user.getName());
         user.setEmail(user.getEmail());
         user.setPhoneNumber(user.getPhoneNumber());
@@ -88,7 +88,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         System.out.println("vao ham load");
-        UserInfo user = userRepository.findByUsername(username);
+        UserInfor user = userRepository.findByUsername(username);
         System.out.println(user.getPassword());
         if(user == null){
             throw new UsernameNotFoundException(username);

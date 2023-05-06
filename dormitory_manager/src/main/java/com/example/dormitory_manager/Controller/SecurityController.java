@@ -3,7 +3,7 @@ package com.example.dormitory_manager.Controller;
 import com.example.dormitory_manager.Services.RoleService;
 
 import com.example.dormitory_manager.entities.Role;
-import com.example.dormitory_manager.entities.UserInfo;
+import com.example.dormitory_manager.entities.UserInfor;
 import com.example.dormitory_manager.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -55,7 +55,7 @@ public class SecurityController {
     @GetMapping("/signup")
     public String showForm(Model model){
         System.out.println("vao sign up");
-        model.addAttribute("user", new UserInfo());
+        model.addAttribute("user", new UserInfor());
 
         return "user-signup";
     }
@@ -63,7 +63,7 @@ public class SecurityController {
 
 
     @PostMapping("/register")
-    public String registerUser(@Validated @ModelAttribute("user") UserInfo user , BindingResult result , RedirectAttributes redirect, Model model) throws Exception {
+    public String registerUser(@Validated @ModelAttribute("user") UserInfor user , BindingResult result , RedirectAttributes redirect, Model model) throws Exception {
 
         Role roleUser = new Role();
         roleUser.setName("ROLE_USER");

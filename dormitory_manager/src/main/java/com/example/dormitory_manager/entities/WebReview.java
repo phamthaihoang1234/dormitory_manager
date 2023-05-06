@@ -12,7 +12,7 @@ public class WebReview {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "users_id")
-    private UserInfo user;
+    private UserInfor user;
     public WebReview() {
     }
 
@@ -40,11 +40,11 @@ public class WebReview {
         this.rate = rate;
     }
 
-    public UserInfo getUser() {
+    public UserInfor getUser() {
         return user;
     }
 
-    public void setUser(UserInfo user) {
+    public void setUser(UserInfor user) {
         this.user = user;
     }
 

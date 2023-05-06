@@ -7,22 +7,16 @@ import com.example.dormitory_manager.Services.DomService;
 import com.example.dormitory_manager.Services.RoomService;
 import com.example.dormitory_manager.Services.UserService;
 import com.example.dormitory_manager.entities.Room;
-import com.example.dormitory_manager.entities.UserInfo;
+import com.example.dormitory_manager.entities.UserInfor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.IOException;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Controller
@@ -77,7 +71,7 @@ public class RoomController {
 
     @GetMapping("/roomHomepage")
     public String homepageRoom(Model model){
-        UserInfo userInfo = userService.findByUserName(getPrincipal());
+        UserInfor userInfo = userService.findByUserName(getPrincipal());
         model.addAttribute("rooms",roomService.findAllByDomId(idDom));
         if(userInfo.getRoom() != null){
             model.addAttribute("idRoomOfUser",userInfo.getRoom().getId());
@@ -156,14 +150,14 @@ public class RoomController {
     @GetMapping("/bookRoom/{id}")
     public String bookRoom(@PathVariable("id") long id, RedirectAttributes redirect) throws Exception {
         Room room = roomService.getOne(id).get();
-        UserInfo userInfo = userService.findByUserName(getPrincipal());
+        UserInfor userInfo = userService.findByUserName(getPrincipal());
 
-        Set<UserInfo> list = room.getUsers();
+        Set<UserInfor> list = room.getUsers();
 
         if(room.getUsers().isEmpty()) {
              list = new HashSet<>();
         }else {
-            for (UserInfo u: list) {
+            for (UserInfor u: list) {
                 if(u.getUsername() == userInfo.getUsername()){
                     redirect.addFlashAttribute("globalMessageBook", "You booked this room , you cannot book anymore.");
                     return "redirect:/roomHomepage";
@@ -203,9 +197,9 @@ public class RoomController {
         return "redirect:/roomHomepage";
     }
 
-    public UserInfo checkUserBooked(Set<UserInfo> list){
-        UserInfo userInfo = userService.findByUserName(getPrincipal());
-        for (UserInfo u: list) {
+    public UserInfor checkUserBooked(Set<UserInfor> list){
+        UserInfor userInfo = userService.findByUserName(getPrincipal());
+        for (UserInfor u: list) {
             if(u.getUsername() == userInfo.getUsername()){
 
                 return u;
@@ -218,12 +212,12 @@ public class RoomController {
     @GetMapping("/returnRoom/{id}")
     public String returnRoom(@PathVariable("id") long id, RedirectAttributes redirect) throws Exception {
         Room room = roomService.getOne(id).get();
-        UserInfo userInfo = userService.findByUserName(getPrincipal());
+        UserInfor userInfo = userService.findByUserName(getPrincipal());
         int checkReturn = 0;
 
-        Set<UserInfo> list = room.getUsers();
+        Set<UserInfor> list = room.getUsers();
 
-        UserInfo u = checkUserBooked(list);
+        UserInfor u = checkUserBooked(list);
         if(u != null){
             u.setRoom(null);
             list.remove(userService.findByUserName(getPrincipal()));

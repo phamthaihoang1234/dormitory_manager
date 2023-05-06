@@ -2,14 +2,12 @@ package com.example.dormitory_manager.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sun.istack.NotNull;
-import org.intellij.lang.annotations.Pattern;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 
 import java.util.List;
 import java.util.Set;
@@ -17,10 +15,11 @@ import java.util.Set;
 @Entity
 @Table(name = "users")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class UserInfo extends AbstractEntity implements Serializable {
+public class UserInfor extends AbstractEntity implements Serializable {
 
     public static final PasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
 
+    private boolean enabled;
 
     @NotNull
     private String username;
@@ -66,13 +65,21 @@ public class UserInfo extends AbstractEntity implements Serializable {
         this.room = room;
     }
 
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
     private List<WebReview> comments;
 
     private String passwordToken;//for password recovery
     private String avatar;
 
-    public UserInfo(String username, String name, String address, String email, String password, String gender, String phoneNumber, Boolean active, Set<Role> roles, String token, List<WebReview> comments, String passwordToken, String avatar) {
+    public UserInfor(String username, String name, String address, String email, String password, String gender, String phoneNumber, Boolean active, Set<Role> roles, String token, List<WebReview> comments, String passwordToken, String avatar) {
         this.username = username;
         this.name = name;
         this.address = address;
@@ -88,7 +95,7 @@ public class UserInfo extends AbstractEntity implements Serializable {
         this.avatar = avatar;
     }
 
-    public UserInfo() {
+    public UserInfor() {
 
     }
 

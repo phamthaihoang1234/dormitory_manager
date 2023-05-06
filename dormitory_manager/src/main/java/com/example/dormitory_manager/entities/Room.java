@@ -1,11 +1,9 @@
 package com.example.dormitory_manager.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -28,11 +26,11 @@ public class Room extends AbstractEntity implements Serializable {
         this.totalOfNumberStudent = totalOfNumberStudent;
     }
 
-    public Set<UserInfo> getUsers() {
+    public Set<UserInfor> getUsers() {
         return users;
     }
 
-    public void setUsers(Set<UserInfo> users) {
+    public void setUsers(Set<UserInfor> users) {
         this.users = users;
     }
 
@@ -46,7 +44,7 @@ public class Room extends AbstractEntity implements Serializable {
     private Boolean status = true;
 
     @OneToMany(mappedBy = "room")
-    public Set<UserInfo> users;
+    public Set<UserInfor> users;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dom_id", nullable = false, updatable = false)
