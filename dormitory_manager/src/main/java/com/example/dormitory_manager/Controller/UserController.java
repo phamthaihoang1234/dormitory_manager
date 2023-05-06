@@ -1,73 +1,77 @@
 package com.example.dormitory_manager.Controller;
 
-import com.example.dormitory_manager.entities.UserInfo;
+import com.example.dormitory_manager.Repository.UseRepository;
 import com.example.dormitory_manager.Services.UserService;
+import com.example.dormitory_manager.entities.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping("/api/users")
-public class UserController {
+import java.util.Optional;
 
+@Controller
+public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping
-    public ResponseEntity<Iterable<UserInfo>> getUsers() {
-        Iterable<UserInfo> users = userService.findAll();
-        return new ResponseEntity<>(users, HttpStatus.OK);
+    @Autowired
+    private UseRepository useRepository; // sửa tên UserRepository thành UseRepository
+
+    @GetMapping("/homepageUser")
+    public String homepageUser(Model model) {
+        model.addAttribute("users", userService.findAll());
+        return "userHomepage";
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<UserInfo> getUserById(@PathVariable("id") Long id) {
-        UserInfo user = userService.findById(id).orElse(null);
-        if (user != null) {
-            return new ResponseEntity<>(user, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    @GetMapping("/showFormCreUser")
+    public String showFormCreateUser(Model model) {
+        model.addAttribute("user", new UserInfo());
+        return "form-add-user";
     }
 
-    @PostMapping
-    public ResponseEntity<UserInfo> createUser(@RequestBody UserInfo user) {
+    @PostMapping("/createUser")
+    public String createUser(Model model, @ModelAttribute UserInfo user) throws Exception {
         try {
-            UserInfo newUser = userService.save(user);
-            return new ResponseEntity<>(newUser, HttpStatus.CREATED);
+            userService.save(user);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            throw new RuntimeException(e);
         }
+        return "redirect:/homepageUser";
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<UserInfo> updateUser(@PathVariable("id") Long id, @RequestBody UserInfo user) {
+    @GetMapping("/findOne/{id}")
+    public String findUserById(@PathVariable("id") long id, Model model) {
+        model.addAttribute("user", userService.findById(id).get());
+        return "form-edit-user";
+    }
+
+    @PostMapping("/saveEdit")
+    public String updateUser(@ModelAttribute UserInfo user) {
+        Optional<UserInfo> oldUser = userService.findById(user.getId());
+        oldUser.get().setUsername(user.getUsername());
+        oldUser.get().setPassword(user.getPassword());
+        oldUser.get().setName(user.getName());
+        oldUser.get().setEmail(user.getEmail());
+        oldUser.get().setRoles(user.getRoles());
+        oldUser.get().setId(user.getId());
         try {
-            user.setId(id);
-            UserInfo updatedUser = userService.updateInfor(user);
-            if (updatedUser != null) {
-                return new ResponseEntity<>(updatedUser, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
+            userService.save(oldUser.get());
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            throw new RuntimeException(e);
         }
+        return "redirect:/homepageUser";
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping("/{id}")
-    public ResponseEntity<HttpStatus> deleteUser(@PathVariable("id") Long id) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentUserName = authentication.getName();
-        UserInfo currentUser = userService.findByUserName(currentUserName);
-        if (currentUser.getId() == id) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+    @GetMapping("/delete")
+    public String deleteUser(long id) {
+        UserInfo user = userService.findById(id).get();
+        user.setEnabled(false);
+        try {
+            userService.save(user);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-        userService.delete(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return "redirect:/homepageUser";
     }
 }

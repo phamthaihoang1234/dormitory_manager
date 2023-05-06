@@ -21,6 +21,7 @@ public class UserInfo extends AbstractEntity implements Serializable {
 
     public static final PasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
 
+    private boolean enabled;
 
     @NotNull
     private String username;
@@ -79,6 +80,13 @@ public class UserInfo extends AbstractEntity implements Serializable {
 
     }
 
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
     public String getUsername() {
         return username;
     }

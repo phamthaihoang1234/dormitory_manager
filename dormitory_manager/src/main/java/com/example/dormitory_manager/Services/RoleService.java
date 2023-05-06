@@ -1,13 +1,13 @@
-package com.example.dormitory_manager.Services;
+    package com.example.dormitory_manager.Services;
 
-import com.example.dormitory_manager.entities.Role;
+    import com.example.dormitory_manager.entities.Role;
 
-import java.util.Optional;
+    import java.util.Optional;
 
-public interface RoleService {
-    Optional<Role> findByName(String name);
+    public interface RoleService {
+        Optional<Role> findByName(String name);
 
-    Role save(Role role);
+        Role save(Role role);
 
-    Iterable<Role> findAll();
-}
+        Iterable<Role> findAll();
+    }
