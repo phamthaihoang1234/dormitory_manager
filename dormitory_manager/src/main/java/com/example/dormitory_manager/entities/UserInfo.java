@@ -22,6 +22,8 @@ public class UserInfo extends AbstractEntity implements Serializable {
     public static final PasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
 
 
+    private boolean enabled;
+
     @NotNull
     private String username;
     private String name;
@@ -64,6 +66,14 @@ public class UserInfo extends AbstractEntity implements Serializable {
 
     public void setRoom(Room room) {
         this.room = room;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
