@@ -1,6 +1,7 @@
 package com.example.dormitory_manager.Controller;
 
 
+import com.example.dormitory_manager.Services.BlogService;
 import com.example.dormitory_manager.entities.Blog;
 
 import com.example.dormitory_manager.repositories.BlogRepository;
@@ -29,7 +30,7 @@ public class BlogController {
     private UserService UserService;
 
     @Autowired
-    private com.example.dormitory_manager.services.BlogService blogService;
+    private BlogService blogService;
 
 
 //    @GetMapping("/blog")

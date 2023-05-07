@@ -31,7 +31,7 @@ public class SecurityController {
     @PostMapping("/fail_login")
     public String handeLoginFail(Model model){
         System.out.println("vao ham fail");
-        model.addAttribute("errol", "Invalid username or password");
+        model.addAttribute("errol", "Username or password was wrong .");
         return "/login";
     }
 
@@ -58,6 +58,11 @@ public class SecurityController {
         model.addAttribute("user", new UserInfo());
 
         return "user-signup";
+    }
+
+    @GetMapping("/fail_login")
+    public String accessDenied(){
+        return "accessdenie";
     }
 
 

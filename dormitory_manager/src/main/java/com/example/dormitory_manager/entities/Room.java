@@ -60,15 +60,15 @@ public class Room extends AbstractEntity implements Serializable {
     @JoinColumn(name = "property_type",nullable = true, updatable = false)
     private PropertyType propertyType;
 
-    @Transient
-    private  Object avgRatting;
+    /*@Transient
+    private  Object avgRatting;*/
 
-    @Transient
-    MultipartFile image;
+    /*@Transient
+    MultipartFile image;*/
 
 
-    @Column(nullable = true)
-    private String imgSrc3;
+   /* @Column(nullable = true)
+    private String imgSrc3;*/
 
 
 
@@ -158,15 +158,15 @@ public class Room extends AbstractEntity implements Serializable {
         this.propertyType = propertyType;
     }
 
-    public Object getAvgRatting() {
+   /* public Object getAvgRatting() {
         return avgRatting;
     }
 
     public void setAvgRatting(Object avgRatting) {
         this.avgRatting = avgRatting;
-    }
+    }*/
 
-    public MultipartFile getImage() {
+   /* public MultipartFile getImage() {
         return image;
     }
 
@@ -180,7 +180,7 @@ public class Room extends AbstractEntity implements Serializable {
 
     public void setImgSrc3(String imgSrc3) {
         this.imgSrc3 = imgSrc3;
-    }
+    }*/
 
 
 

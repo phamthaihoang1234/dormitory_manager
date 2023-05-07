@@ -1,5 +1,6 @@
 package com.example.dormitory_manager.Controller;
 
+import com.example.dormitory_manager.Repository.DiscountRepository;
 import com.example.dormitory_manager.Repository.PropertyTypeRepository;
 import com.example.dormitory_manager.Repository.RoomRepository;
 
@@ -53,6 +54,9 @@ public class RoomController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private DiscountRepository discountRepository;
+
 
 
 
@@ -102,6 +106,7 @@ public class RoomController {
 
     @PostMapping("/saveRoom")
     public String saveRoom(Model model, @ModelAttribute("room") Room room,@RequestParam("pr") Long id,RedirectAttributes redirect){
+        room.setDiscount(discountRepository.findById(1L).get());
         room.setDom(domService.findById(idDom).get());
         room.setPropertyType(typeService.findById(id).get());
 
