@@ -38,7 +38,7 @@ public class UserController {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        return "redirect:/homepageUser";
+        return "UserInfo/homepageUser";
     }
 
     @GetMapping("/findOneUser/{id}")

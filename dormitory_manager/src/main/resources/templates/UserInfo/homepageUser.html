@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Manage Users</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"  />
+</head>
+<body>
+<div class="container-fluid text-center">
+  <div><h1>Manage Users</h1></div>
+  <a class="h3" th:href="@{/createUser}">Add User</a>
+  <div>
+    <table class="table table-bordered">
+      <hr></hr>
+       <thead class="thead-dark">
+       <table>
+         <thead>
+         <tr class="table table-bordered" >
+           <th>Id</th>
+           <th>Name</th>
+           <th>Address</th>
+           <th>Email</th>
+           <th>Phone Number</th>
+           <th>Gender</th>
+
+         </tr>
+         </thead>
+         <tbody>
+         <tr th:each="u :${UserInfo}">
+           <td th:text="${u.id}"></td>
+           <td th:text="${u.name}"></td>
+           <td th:text="${u.address}"></td>
+           <td th:text="${u.email}"></td>
+           <td th:text="${u.phoneNumber}"></td>
+
+         </tr>
+
+         </tbody>
+       </table>
+       </thead>
+
+
+
+
+
+
+
+
+
+<!--        <tr>-->
+<!--          <p>ID</p>-->
+<!--          <p>Name</p>-->
+<!--          <p>Email</p>-->
+<!--          <p>PhoneNumber</p>-->
+<!--          <p>Address</p>-->
+<!-- -->
+<!--            <th></th>-->
+
+
+<!--        </tr>-->
+<!--        </thead>-->
+<!--      <tr th:each="u : ${UserInfo}">-->
+<!--        &lt;!&ndash;bold&#45;&#45; th:text="${b.getId()}" ></bold&ndash;&gt;-->
+<!--        <h3 th:text="${u.ID}"></h3>-->
+<!--        <h4 th:text="${u.Name}"></h4>-->
+<!--        <ul th:text="${b.getDescription()}"></ul>-->
+        <hr>
+
+
+
+
+        <bold>
+          <a class="h4 mr-3" th:href="@{'/edit/' + ${u.id}}">Edit</a>
+          <a class="h4" th:href="@{deleteUser/(id=${u.id})}">Delete</a>
+        </bold>
+        <hr>
+
+
+
+      </tr>
+    </table>
+
+  </div>
+</div>
+
+
+</body>
