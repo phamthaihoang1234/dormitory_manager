@@ -30,7 +30,7 @@ public class Blog {
     @Column(name = "Description")
     private String description;
 
-    public Blog(Long id, String title, String description, MultipartFile image, String imgSrc, UserInfor user) {
+    public Blog(Long id, String title, String description, MultipartFile image, String imgSrc, UserInfo user) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -47,7 +47,7 @@ public class Blog {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id",nullable = true, updatable = true)
-    private UserInfor User;
+    private UserInfo User;
 
     public Blog() {
 
@@ -93,11 +93,11 @@ public class Blog {
         this.imgSrc = imgSrc;
     }
 
-    public UserInfor getUser() {
+    public UserInfo getUser() {
         return User;
     }
 
-    public void setUser(UserInfor user) {
+    public void setUser(UserInfo user) {
         User = user;
     }
 }

@@ -16,7 +16,7 @@ public class Bill {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id",nullable = false,updatable = true)
-    private UserInfor userInfo;
+    private UserInfo userInfo;
 
     @OneToMany(mappedBy = "bill")
     @JsonIgnore
@@ -25,7 +25,7 @@ public class Bill {
     public Bill() {
     }
 
-    public Bill(Long id, UserInfor userInfo, List<Payment> payments) {
+    public Bill(Long id, UserInfo userInfo, List<Payment> payments) {
         this.id = id;
         this.userInfo = userInfo;
         this.payments = payments;
@@ -39,11 +39,11 @@ public class Bill {
         this.id = id;
     }
 
-    public UserInfor getUserInfo() {
+    public UserInfo getUserInfo() {
         return userInfo;
     }
 
-    public void setUserInfo(UserInfor userInfo) {
+    public void setUserInfo(UserInfo userInfo) {
         this.userInfo = userInfo;
     }
 

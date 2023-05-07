@@ -1,7 +1,7 @@
 package com.example.dormitory_manager.Services;
 
 import com.example.dormitory_manager.Repository.UseRepository;
-import com.example.dormitory_manager.entities.UserInfor;
+import com.example.dormitory_manager.entities.UserInfo;
 import com.example.dormitory_manager.entities.UserPrinciple;
 import org.springframework.context.MessageSource;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,37 +11,37 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService{
     private final UseRepository userRepository;
 
     private final MessageSource messageSource;
 
-    private final com.example.dormitory_manager.Services.RoleService roleService;
+    private final RoleService roleService;
 
-    public UserServiceImpl(UseRepository userRepository, MessageSource messageSource, com.example.dormitory_manager.Services.RoleService roleService) {
+    public UserServiceImpl(UseRepository userRepository, MessageSource messageSource, RoleService roleService) {
         this.userRepository = userRepository;
         this.messageSource = messageSource;
         this.roleService = roleService;
     }
 
     @Override
-    public Iterable<UserInfor> findAll() {
+    public Iterable<UserInfo> findAll() {
         return userRepository.findAll();
     }
 
     @Override
-    public Optional<UserInfor> findById(Long id) {
+    public Optional<UserInfo> findById(Long id) {
         return userRepository.findById(id);
     }
 
 
     @Override
-    public UserInfor findByEmail(String email) {
+    public UserInfo findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
     @Override
-    public UserInfor findByUserName(String username) {
+    public UserInfo findByUserName(String username) {
         return userRepository.findByUsername(username);
     }
 
@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<UserInfor> existsByUsernameAndPassword(String email, String password) throws Exception {
+    public Optional<UserInfo> existsByUsernameAndPassword(String email, String password) throws Exception {
         return userRepository.existsByUsernameAndPassword(email,password);
     }
 
@@ -61,19 +61,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserInfor save(UserInfor user) throws Exception {
+    public UserInfo save(UserInfo user) throws Exception {
 
         return userRepository.save(user);
     }
 
     @Override
-    public boolean changePassword(UserInfor user) throws Exception{
+    public boolean changePassword(UserInfo user) throws Exception{
         return true;
 
     }
 
     @Override
-    public UserInfor updateInfor(UserInfor user) throws Exception{
+    public UserInfo updateInfor(UserInfo user) throws Exception{
         user.setName(user.getName());
         user.setEmail(user.getEmail());
         user.setPhoneNumber(user.getPhoneNumber());
@@ -88,7 +88,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         System.out.println("vao ham load");
-        UserInfor user = userRepository.findByUsername(username);
+        UserInfo user = userRepository.findByUsername(username);
         System.out.println(user.getPassword());
         if(user == null){
             throw new UsernameNotFoundException(username);

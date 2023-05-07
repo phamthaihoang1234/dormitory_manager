@@ -2,12 +2,14 @@ package com.example.dormitory_manager.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sun.istack.NotNull;
+import org.intellij.lang.annotations.Pattern;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 import java.util.List;
 import java.util.Set;
@@ -15,9 +17,10 @@ import java.util.Set;
 @Entity
 @Table(name = "users")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class UserInfor extends AbstractEntity implements Serializable {
+public class UserInfo extends AbstractEntity implements Serializable {
 
     public static final PasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
+
 
     private boolean enabled;
 
@@ -79,7 +82,7 @@ public class UserInfor extends AbstractEntity implements Serializable {
     private String passwordToken;//for password recovery
     private String avatar;
 
-    public UserInfor(String username, String name, String address, String email, String password, String gender, String phoneNumber, Boolean active, Set<Role> roles, String token, List<WebReview> comments, String passwordToken, String avatar) {
+    public UserInfo(String username, String name, String address, String email, String password, String gender, String phoneNumber, Boolean active, Set<Role> roles, String token, List<WebReview> comments, String passwordToken, String avatar) {
         this.username = username;
         this.name = name;
         this.address = address;
@@ -95,7 +98,7 @@ public class UserInfor extends AbstractEntity implements Serializable {
         this.avatar = avatar;
     }
 
-    public UserInfor() {
+    public UserInfo() {
 
     }
 

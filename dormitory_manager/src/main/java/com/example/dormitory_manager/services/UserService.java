@@ -1,29 +1,28 @@
 package com.example.dormitory_manager.Services;
 
-import com.example.dormitory_manager.entities.UserInfor;
+import com.example.dormitory_manager.entities.UserInfo;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.Optional;
 
-
 public interface UserService extends UserDetailsService {
-    Iterable<UserInfor> findAll();
+    Iterable<UserInfo> findAll();
 
-    Optional<UserInfor> findById(Long id);
+    Optional<UserInfo> findById(Long id);
 
-    UserInfor findByEmail(String email);
+    UserInfo findByEmail(String email);
 
-    UserInfor save(UserInfor user) throws Exception;
+    UserInfo save(UserInfo user) throws Exception;
 
-    UserInfor findByUserName(String username);
+    UserInfo findByUserName(String username);
 
     boolean existsByUsername(String username);
 
-    public UserInfor updateInfor(UserInfor user) throws Exception;
+    public UserInfo updateInfor(UserInfo user) throws Exception;
 
-    public boolean changePassword(UserInfor user) throws Exception;
+    public boolean changePassword(UserInfo user) throws Exception;
 
-    Optional<UserInfor> existsByUsernameAndPassword(String email, String password) throws Exception;
+    Optional<UserInfo> existsByUsernameAndPassword(String email, String password) throws Exception;
 
     void delete(Long id);
 }

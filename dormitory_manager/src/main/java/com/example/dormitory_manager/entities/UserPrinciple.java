@@ -21,7 +21,7 @@ public class UserPrinciple implements UserDetails {
         this.roles = roles;
     }
 
-    public static UserPrinciple built(UserInfor user){
+    public static UserPrinciple built(UserInfo user){
         List<GrantedAuthority> authorities = new ArrayList<>();
         for(Role role: user.getRoles()){
             authorities.add(new SimpleGrantedAuthority(role.getName()));
@@ -31,7 +31,7 @@ public class UserPrinciple implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-       return roles;
+        return roles;
     }
 
     @Override

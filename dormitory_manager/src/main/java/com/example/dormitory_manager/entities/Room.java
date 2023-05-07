@@ -26,11 +26,11 @@ public class Room extends AbstractEntity implements Serializable {
         this.totalOfNumberStudent = totalOfNumberStudent;
     }
 
-    public Set<UserInfor> getUsers() {
+    public Set<UserInfo> getUsers() {
         return users;
     }
 
-    public void setUsers(Set<UserInfor> users) {
+    public void setUsers(Set<UserInfo> users) {
         this.users = users;
     }
 
@@ -44,7 +44,7 @@ public class Room extends AbstractEntity implements Serializable {
     private Boolean status = true;
 
     @OneToMany(mappedBy = "room")
-    public Set<UserInfor> users;
+    public Set<UserInfo> users;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dom_id", nullable = false, updatable = false)
