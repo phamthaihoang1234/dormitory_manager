@@ -11,14 +11,14 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService{
     private final UseRepository userRepository;
 
     private final MessageSource messageSource;
 
-    private final com.example.dormitory_manager.Services.RoleService roleService;
+    private final RoleService roleService;
 
-    public UserServiceImpl(UseRepository userRepository, MessageSource messageSource, com.example.dormitory_manager.Services.RoleService roleService) {
+    public UserServiceImpl(UseRepository userRepository, MessageSource messageSource, RoleService roleService) {
         this.userRepository = userRepository;
         this.messageSource = messageSource;
         this.roleService = roleService;
